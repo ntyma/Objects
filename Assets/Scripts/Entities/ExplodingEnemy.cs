@@ -15,23 +15,16 @@ public class ExplodingEnemy : Enemy
 
     }
 
-    public override void Attack()
-    {
-        base.Attack();
-        Debug.Log("Exploding Enemy: Explode attack");
-
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(target.tag))
         {
             Debug.Log("exploding touched: " + target.tag);
-            collision.GetComponent<IDamageable>().ReceiveDamage();
+            collision.GetComponent<IDamageable>().ReceiveDamage(10);
 
             //collision.GetComponent<Enemy>().ReceiveDamage();
-            Destroy(gameObject);
+            Invoke(nameof(Die), 0.75f);
         }
     }
 }

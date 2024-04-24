@@ -18,7 +18,7 @@ public class Player : Character
     {
         //rigidbody = GetComponent<Rigidbody2D>();
         myPlayer = GetComponent<Player>();
-        healthPoints = new Health(4);
+        healthPoints = new Health(100);
         playerWeapon = new Weapon(bulletPrefab);
 
         //Listeners
@@ -27,7 +27,7 @@ public class Player : Character
 
     public void ChangedHealth(int health)
     {
-        Debug.Log("Player life has changed: " + health);
+        Debug.Log("Player life : " + health);
         if (health <= 0)
         {
             //GameManager.singleton.scoreManager.RegisterHighscore();

@@ -93,6 +93,6 @@ public class Enemy : Character
 
     public override void Die()
     {
-
+        Destroy(gameObject);
     }
 }
