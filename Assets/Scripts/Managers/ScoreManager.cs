@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager singleton;
+
+    //UI Text
+    [SerializeField] private TextMeshProUGUI uiScoreText;
 
     [SerializeField] private int totalScore;
     [SerializeField] private int highestScore;
@@ -18,6 +22,7 @@ public class ScoreManager : MonoBehaviour
         singleton = this;
         highestScore = PlayerPrefs.GetInt("HSCORE"); //retrieving save file with the name HSCORE
     }
+
     public void IncreaseScore()
     {
         totalScore += 1;

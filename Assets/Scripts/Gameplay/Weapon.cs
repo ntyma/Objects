@@ -9,10 +9,10 @@ public class Weapon : ScriptableObject
     [SerializeField] Bullet bulletReference;
     [SerializeField] int damage;
 
-    public void ShootPlayer(Vector2 position, Quaternion direction, string tag)
+    public void Shoot(Vector2 position, Quaternion direction, string tag)
     {
         Bullet tmpBullet = GameObject.Instantiate(bulletReference, position, direction);
-        tmpBullet.SetUpBullet(tag, 1);
+        tmpBullet.SetUpBullet(tag, damage);
     }
 
     public Weapon()

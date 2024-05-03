@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] private Bullet bulletPrefab;
+    //[SerializeField] private Bullet bulletPrefab;
     [SerializeField] private Transform aim;
     [SerializeField] private Weapon playerWeapon;
     private Player myPlayer;
@@ -16,10 +16,10 @@ public class Player : Character
 
     protected override void Start()
     {
-        //rigidbody = GetComponent<Rigidbody2D>();
+        
         myPlayer = GetComponent<Player>();
         healthPoints = new Health(100);
-        playerWeapon = new Weapon(bulletPrefab);
+        //playerWeapon = new Weapon(bulletPrefab);
 
         //Listeners
         healthPoints.OnHealthChanged.AddListener(ChangedHealth);
@@ -39,7 +39,7 @@ public class Player : Character
     public override void Attack()
     {
         //playerWeapon.ShootPlayer(aim.position, aim.rotation);
-        playerWeapon.ShootPlayer(transform.position, transform.rotation, "Enemy");
+        playerWeapon.Shoot(transform.position, transform.rotation, "Enemy");
     }
 
     public override void Die()

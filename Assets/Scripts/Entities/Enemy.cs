@@ -9,6 +9,7 @@ public class Enemy : Character
     protected Player target;
     [SerializeField] protected float time;
 
+    [SerializeField] protected bool inAttackRange;
     
 
     //public Enemy(float speed, int health)
@@ -66,17 +67,24 @@ public class Enemy : Character
         if(Vector2.Distance(target.transform.position, transform.position) > attackDistance)
         {
             base.Move(direction, angle);
+            //Debug.Log("NOT in attack range");
+            inAttackRange = false;
         } else
         {
             //stop immediately
-            //rigidbody.velocity = Vector2.zero;
-            time += Time.deltaTime;
-            if(time >= 2f)
+            rigidbody.velocity = Vector2.zero;
+            //Debug.Log("in attack range");
+            inAttackRange = true;
+
+            if(attackDistance < 1)
             {
-                target.ReceiveDamage();
-                time = 0f;
+                time += Time.deltaTime;
+                if (time >= 2f)
+                {
+                    target.ReceiveDamage();
+                    time = 0f;
+                }
             }
-            
         }
         
     }

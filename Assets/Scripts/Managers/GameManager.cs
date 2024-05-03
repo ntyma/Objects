@@ -7,11 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
     public ScoreManager scoreManager;
 
-    [SerializeField] private Enemy enemyPrefab;
-    [SerializeField] private ExplodingEnemy explodingEnemyPrefab;
+    [SerializeField] private Enemy[] enemyPrefabs;
 
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private Transform testPoint;
     float timer;
 
     private void Awake()
@@ -22,8 +20,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(SpawnEnemy());
-        SpawnExplodingEnemy();
+        StartCoroutine(SpawnEnemy());
     }
 
     public void EndGame()
@@ -41,16 +38,6 @@ public class GameManager : MonoBehaviour
 
         }
 
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    StartCoroutine(SpawnEnemy());
-        //}
-    }
-
-    private void SpawnExplodingEnemy()
-    {
-        ExplodingEnemy exEnemy = Instantiate(explodingEnemyPrefab, testPoint.position, testPoint.rotation);
-        exEnemy.SetUpEnemy(1);
     }
 
     IEnumerator SpawnEnemy()
@@ -60,7 +47,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-            Enemy enemy = Instantiate(enemyPrefab, randomSpawnPoint.position, Quaternion.identity);
+
+            Enemy enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], randomSpawnPoint.position, Quaternion.identity);
             enemy.SetUpEnemy(1);
         }
         
