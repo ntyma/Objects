@@ -8,10 +8,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager singleton;
 
-    //UI Text
-    [SerializeField] private TextMeshProUGUI uiScoreText;
-
-    [SerializeField] private int totalScore;
+    [SerializeField] public int totalScore;
     [SerializeField] private int highestScore;
 
     public UnityEvent<int> OnTotalScoreChanged = new UnityEvent<int>();
@@ -21,6 +18,7 @@ public class ScoreManager : MonoBehaviour
     {
         singleton = this;
         highestScore = PlayerPrefs.GetInt("HSCORE"); //retrieving save file with the name HSCORE
+
     }
 
     public void IncreaseScore()
@@ -38,4 +36,6 @@ public class ScoreManager : MonoBehaviour
             OnHighestScoreChanged.Invoke(highestScore);
         }
     }
+
+    
 }

@@ -281,6 +281,7 @@ MonoBehaviour:
   inAttackRange: 0
   weapon: {fileID: 11400000, guid: 4fe723144144e4174ac53234fdc6fa41, type: 2}
   aim: {fileID: 8774404711153201735}
+  shootDelay: 3
   lineRenderer: {fileID: 8214939771657819327}
 --- !u!50 &6156467691181922696
 Rigidbody2D:

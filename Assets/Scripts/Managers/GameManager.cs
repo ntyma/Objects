@@ -7,11 +7,18 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
     public ScoreManager scoreManager;
 
+    //==== PREFABS ====
     [SerializeField] private Enemy[] enemyPrefabs;
+    [SerializeField] private Nuke nukePrefab;
+    [SerializeField] private MedicineBox medBoxPrefab;
 
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private List<Enemy> enemiesSpawned = new List<Enemy>();
+    //[SerializeField] private int GeneratePickUpProbability;
     float timer;
 
+
+    [SerializeField] private Transform testPoint;
     private void Awake()
     {
         singleton = this;
@@ -32,12 +39,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= 1)
+        if (Input.GetKeyDown(KeyCode.N))
         {
-
+            Debug.Log("nuke");
+            GeneratePickUp(testPoint.position);
         }
-
     }
 
     IEnumerator SpawnEnemy()
@@ -49,7 +55,64 @@ public class GameManager : MonoBehaviour
 
 
             Enemy enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], randomSpawnPoint.position, Quaternion.identity);
+            enemiesSpawned.Add(enemy);
+            enemy.OnEnemyDeath.AddListener(EnemyDied);
+
             enemy.SetUpEnemy(1);
+
+            if(enemiesSpawned.Count > 15)
+            {
+                CleanList();
+            }
+
+
+        }
+        
+    }
+
+    public void DestroyAllEnemies()
+    {
+        CleanList();
+        foreach (Enemy enemy in enemiesSpawned)
+        {
+            if (enemy != null)
+            {
+                enemy.Die();
+            }
+            
+        }
+        //empty the list
+        enemiesSpawned.RemoveRange(0, enemiesSpawned.Count);
+    }
+
+    private void CleanList()
+    {
+        for (int i = 0; i < enemiesSpawned.Count; i++)
+        {
+            if (enemiesSpawned[i] == null)
+            {
+                enemiesSpawned.RemoveAt(i);
+            }
+        }
+    }
+
+    public void EnemyDied(Vector3 enemyPosition)
+    {
+        scoreManager.IncreaseScore();
+        
+        GeneratePickUp(enemyPosition);
+    }
+
+    private void GeneratePickUp(Vector3 position)
+    {
+        int n = Random.Range(0, 10);
+        if (n < 2)
+        {
+            Instantiate(nukePrefab, position, Quaternion.identity);
+        }
+        if (n > 8)
+        {
+            Instantiate(medBoxPrefab, position, Quaternion.identity);
         }
         
     }

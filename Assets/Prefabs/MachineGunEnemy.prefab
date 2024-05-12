@@ -255,6 +255,7 @@ MonoBehaviour:
   inAttackRange: 0
   weapon: {fileID: 11400000, guid: d8eaeed1f092942eea5616ceb0596a4a, type: 2}
   aim: {fileID: 2061737803922547130}
+  shootDelay: 0.6
 --- !u!61 &1506645896676634562
 BoxCollider2D:
   m_ObjectHideFlags: 0

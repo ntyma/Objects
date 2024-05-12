@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : Character
 {
@@ -8,9 +9,9 @@ public class Enemy : Character
     [SerializeField] protected float attackDistance;
     protected Player target;
     [SerializeField] protected float time;
-
     [SerializeField] protected bool inAttackRange;
-    
+
+    public UnityEvent<Vector3> OnEnemyDeath = new UnityEvent<Vector3>();
 
     //public Enemy(float speed, int health)
     //{
@@ -40,15 +41,15 @@ public class Enemy : Character
     }
 
   
-
     public void ChangedHealth(int health)
     {
-        Debug.Log("Enemy Life has changed: " + health);
+        //Debug.Log("Enemy Life has changed: " + health);
         if (health <= 0)
         {
             //increase score
-            ScoreManager.singleton.IncreaseScore();
-            Destroy(gameObject);
+            //ScoreManager.singleton.IncreaseScore();
+            //Destroy(gameObject);
+            Die();
         }
     }
 
@@ -67,7 +68,6 @@ public class Enemy : Character
         if(Vector2.Distance(target.transform.position, transform.position) > attackDistance)
         {
             base.Move(direction, angle);
-            //Debug.Log("NOT in attack range");
             inAttackRange = false;
         } else
         {
@@ -89,10 +89,7 @@ public class Enemy : Character
         
     }
 
-    //public override void ReceiveDamage()
-    //{
-    //    Debug.Log("Enemy take damage");
-    //}
+
 
     public override void Attack()
     {
@@ -101,6 +98,8 @@ public class Enemy : Character
 
     public override void Die()
     {
+        OnEnemyDeath.Invoke(transform.position);
+        
         Destroy(gameObject);
     }
 }

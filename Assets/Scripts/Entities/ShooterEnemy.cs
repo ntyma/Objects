@@ -6,6 +6,7 @@ public class ShooterEnemy : Enemy
 {
     [SerializeField] private Weapon weapon;
     [SerializeField] private Transform aim;
+    [SerializeField] private float shootDelay;
     [SerializeField] private LineRenderer lineRenderer;
 
 
@@ -44,7 +45,7 @@ public class ShooterEnemy : Enemy
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(shootDelay);
             Attack();
         }
     }
@@ -62,7 +63,8 @@ public class ShooterEnemy : Enemy
 
     public override void Die()
     {
-        base.Die();
+
         StopAllCoroutines();
+        base.Die();
     }
 }

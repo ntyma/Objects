@@ -6,6 +6,7 @@ public class MachineGunEnemy : Enemy
 {
     [SerializeField] private Weapon weapon;
     [SerializeField] private Transform aim;
+    [SerializeField] private float shootDelay;
     
 
     public override void Move(Vector2 direction, float angle)
@@ -29,7 +30,7 @@ public class MachineGunEnemy : Enemy
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(shootDelay);
             Attack();
         }
     }
