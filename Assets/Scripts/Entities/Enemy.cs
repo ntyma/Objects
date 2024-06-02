@@ -10,6 +10,7 @@ public class Enemy : Character
     protected Player target;
     [SerializeField] protected float time;
     [SerializeField] protected bool inAttackRange;
+    [SerializeField] protected AnimationController animationController;
 
     public UnityEvent<Vector3> OnEnemyDeath = new UnityEvent<Vector3>();
 
@@ -68,13 +69,14 @@ public class Enemy : Character
         if(Vector2.Distance(target.transform.position, transform.position) > attackDistance)
         {
             base.Move(direction, angle);
+            animationController.SetMoveAnimation();
             inAttackRange = false;
         } else
         {
             //stop immediately
             rigidbody.velocity = Vector2.zero;
-            //Debug.Log("in attack range");
             inAttackRange = true;
+            animationController.SetIdleAnimation();
 
             if(attackDistance < 1)
             {

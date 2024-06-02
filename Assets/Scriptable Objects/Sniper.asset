@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a900489d67c7448eb8b4435aaae7552, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
-  bulletReference: {fileID: 6067875313712730351, guid: a9e823dc90d1d4f928bc180940904aa6, type: 3}
+  bulletReference: {fileID: 1592831642879517867, guid: 1649f2048c0824427bda62047143b123, type: 3}
   damage: 10
