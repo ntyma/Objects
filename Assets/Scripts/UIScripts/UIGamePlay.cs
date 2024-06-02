@@ -23,18 +23,6 @@ public class UIGamePlay : MonoBehaviour
         scoreManager.OnTotalScoreChanged.AddListener(UpdateUIScoreText);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateUIPlayerHealthText(int health)
     {
         uiPlayerHealthText.text = "Health: " + health.ToString();
@@ -47,11 +35,10 @@ public class UIGamePlay : MonoBehaviour
 
     public void ChangeNukeGrid(int currentNukeCount)
     {
-        //Nuke Added
         if (uiNukeCount < currentNukeCount)
         {
             NukeAdded();
-        } //Nuke Used
+        }
         else if (uiNukeCount > currentNukeCount)
         {
             NukeUsed();
@@ -68,12 +55,12 @@ public class UIGamePlay : MonoBehaviour
     {
         GameObject nukeIcon = Instantiate(NukeGridPrefab, GridLayout.transform.position, Quaternion.identity);
         nukeIcon.transform.SetParent(GridLayout);
+        nukeIcon.transform.localScale = new Vector3(1, 1, 1);
         NukeStack.Push(nukeIcon);
     }
 
     private void NukeUsed()
     {
-        Debug.Log("pop stack");
         Destroy(NukeStack.Pop().gameObject);
     }
 }
