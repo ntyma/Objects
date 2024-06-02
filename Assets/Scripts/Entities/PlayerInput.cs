@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private Player myPlayer;
+    private bool isUsingPowerUpGun;
 
     //public Camera mainCamera;
     public Vector2 direction;
@@ -13,19 +14,45 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         myPlayer = GetComponent<Player>();
+        myPlayer.OnPowerUp.AddListener(UsePowerUp);
+        myPlayer.OnPowerUpEnd.AddListener(UserNormalWeapon);
+        isUsingPowerUpGun = false;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!isUsingPowerUpGun)
         {
-            myPlayer.Attack();
+            if (Input.GetMouseButtonDown(0))
+            {
+                myPlayer.Attack();
+            }
+        } else if(isUsingPowerUpGun)
+        {
+            if (Input.GetMouseButton(0))
+            {
+
+                myPlayer.PowerUpAttack();
+            }
         }
+        
         if(Input.GetMouseButtonDown(1))
         {
             myPlayer.UseNuke();
         }
     }
+
+    private void UsePowerUp()
+    {
+        isUsingPowerUpGun = true;
+    }
+
+    private void UserNormalWeapon()
+    {
+        isUsingPowerUpGun = false;
+    }
+
+
 
     // Update is called once per frame
     //Use fixed update for smoother physics (rigidbody) movement

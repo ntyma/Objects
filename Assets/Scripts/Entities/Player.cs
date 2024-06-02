@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Player : Character
 {
     //[SerializeField] private Bullet bulletPrefab;
     [SerializeField] private Transform aim;
     [SerializeField] private Weapon playerWeapon;
-    [SerializeField] public int nukeCount = 0;
+    [SerializeField] private Weapon powerUpWeapon;
+    [SerializeField] private int nukeCount = 0;
+    [SerializeField] private float shootDelay;
+    private float timer;
+    //[SerializeField] private Image coolDownImage;
 
     private Player myPlayer;
+    [SerializeField]private UIPlayerManager uiManager;
 
     public UnityEvent<int> OnNukeCountChanged = new UnityEvent<int>();
+    public UnityEvent OnPowerUp = new UnityEvent();
+    public UnityEvent OnPowerUpEnd = new UnityEvent();
 
     //public Player(float speed, int health) : base(speed, health)
     //{
@@ -49,9 +57,27 @@ public class Player : Character
 
     public override void Attack()
     {
+        Debug.Log("normal attack");
         //playerWeapon.ShootPlayer(aim.position, aim.rotation);
         playerWeapon.Shoot(aim.transform.position, transform.rotation, "Enemy");
     }
+
+    public void PowerUpAttack()
+    {
+
+        Debug.Log("power up attack");
+
+        if(timer > shootDelay)
+        {
+            powerUpWeapon.Shoot(aim.transform.position, transform.rotation, "Enemy");
+            timer = 0;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
 
     public override void Die()
     {
@@ -86,8 +112,17 @@ public class Player : Character
         UIGamePlay.singleton.ChangeNukeGrid(nukeCount);
     }
 
-    //public void ReceiveDamage()
-    //{
-    //    healthPoints.DecreaseLife();
-    //}
+    public void PickedUpGunPowerUp()
+    {
+        OnPowerUp.Invoke();
+        uiManager.StartCoolDown();
+        uiManager.OnCooledDown.AddListener(ChangeWeapon);
+    }
+
+    private void ChangeWeapon()
+    {
+        Debug.Log("Player: Change weapon");
+        OnPowerUpEnd.Invoke();
+    }
+
 }

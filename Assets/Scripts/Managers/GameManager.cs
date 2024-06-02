@@ -11,14 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy[] enemyPrefabs;
     [SerializeField] private Nuke nukePrefab;
     [SerializeField] private MedicineBox medBoxPrefab;
+    [SerializeField] private GunPowerUp gunPowerUpPrefab;
 
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private List<Enemy> enemiesSpawned = new List<Enemy>();
     //[SerializeField] private int GeneratePickUpProbability;
-    float timer;
-
 
     [SerializeField] private Transform testPoint;
+
+
     private void Awake()
     {
         singleton = this;
@@ -110,10 +111,15 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(nukePrefab, position, Quaternion.identity);
         }
+        if(n > 2 && n < 5)
+        {
+            Instantiate(gunPowerUpPrefab, position, Quaternion.identity);
+        }
         if (n > 8)
         {
             Instantiate(medBoxPrefab, position, Quaternion.identity);
         }
         
     }
+
 }
