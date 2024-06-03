@@ -42,4 +42,9 @@ public class Health
         return currentHealth; 
     }
 
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+    }
+
 }

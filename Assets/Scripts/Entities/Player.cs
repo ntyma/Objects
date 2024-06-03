@@ -44,8 +44,6 @@ public class Player : Character
         UIGamePlay.singleton.UpdateUIPlayerHealthText(health);
         if (health <= 0)
         {
-            //GameManager.singleton.scoreManager.RegisterHighscore();
-            //Destroy(gameObject);
             Die();
         }
     }
@@ -57,16 +55,12 @@ public class Player : Character
 
     public override void Attack()
     {
-        Debug.Log("normal attack");
         //playerWeapon.ShootPlayer(aim.position, aim.rotation);
         playerWeapon.Shoot(aim.transform.position, transform.rotation, "Enemy");
     }
 
     public void PowerUpAttack()
     {
-
-        Debug.Log("power up attack");
-
         if(timer > shootDelay)
         {
             powerUpWeapon.Shoot(aim.transform.position, transform.rotation, "Enemy");
@@ -82,7 +76,7 @@ public class Player : Character
     public override void Die()
     {
         GameManager.singleton.EndGame();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     public override void Move(Vector2 direction, float angle)
@@ -107,6 +101,7 @@ public class Player : Character
         GameManager.singleton.DestroyAllEnemies();
     }
 
+
     public void ChangedNukeCount(int nukeCount)
     {
         UIGamePlay.singleton.ChangeNukeGrid(nukeCount);
@@ -121,7 +116,6 @@ public class Player : Character
 
     private void ChangeWeapon()
     {
-        Debug.Log("Player: Change weapon");
         OnPowerUpEnd.Invoke();
     }
 

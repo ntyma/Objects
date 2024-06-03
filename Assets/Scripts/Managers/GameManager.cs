@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     public ScoreManager scoreManager;
+    public UIManager uiManager;
 
     //==== PREFABS ====
     [SerializeField] private Enemy[] enemyPrefabs;
@@ -31,10 +32,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnEnemy());
     }
 
+    public void StartGame()
+    {
+        StartCoroutine(SpawnEnemy());
+    }
+
     public void EndGame()
     {
         StopAllCoroutines();
+        DestroyAllEnemies();
         scoreManager.RegisterHighscore();
+        uiManager.SetGameOverScreen();
     }
 
     // Update is called once per frame

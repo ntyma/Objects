@@ -18,7 +18,6 @@ public class ScoreManager : MonoBehaviour
     {
         singleton = this;
         highestScore = PlayerPrefs.GetInt("HSCORE"); //retrieving save file with the name HSCORE
-
     }
 
     public void IncreaseScore()
@@ -37,5 +36,9 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    public int GetHighScore()
+    {
+        return highestScore;
+    }
     
 }
