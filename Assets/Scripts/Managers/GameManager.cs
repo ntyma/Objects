@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private List<Enemy> enemiesSpawned = new List<Enemy>();
+
+    private float spawnRate;
+
     //[SerializeField] private int GeneratePickUpProbability;
 
     [SerializeField] private Transform testPoint;
@@ -30,12 +33,22 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemy());
+        spawnRate = 3.5f;
+
+        scoreManager.OnScoreReached.AddListener(IncreaseSpawnRate);
     }
 
-    public void StartGame()
+    private void IncreaseSpawnRate(int score)
     {
-        StartCoroutine(SpawnEnemy());
+        if(spawnRate != 2f)
+        {
+            spawnRate -= 0.5f;
+        }
     }
+    //public void StartGame()
+    //{
+    //    StartCoroutine(SpawnEnemy());
+    //}
 
     public void EndGame()
     {
@@ -59,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(spawnRate);
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
 
@@ -115,15 +128,15 @@ public class GameManager : MonoBehaviour
     private void GeneratePickUp(Vector3 position)
     {
         int n = Random.Range(0, 10);
-        if (n < 2)
+        if (n == 2)
         {
             Instantiate(nukePrefab, position, Quaternion.identity);
         }
-        if(n > 2 && n < 5)
+        if(n == 5)
         {
             Instantiate(gunPowerUpPrefab, position, Quaternion.identity);
         }
-        if (n > 8)
+        if (n == 9)
         {
             Instantiate(medBoxPrefab, position, Quaternion.identity);
         }

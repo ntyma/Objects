@@ -308,7 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: -1010315633442209033}
   speed: 1
-  attackDistance: 5
+  attackDistance: 3.5
   time: 0
   inAttackRange: 0
   animationController: {fileID: 9022838768659932867}

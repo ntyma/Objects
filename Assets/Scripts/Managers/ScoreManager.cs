@@ -13,6 +13,7 @@ public class ScoreManager : MonoBehaviour
 
     public UnityEvent<int> OnTotalScoreChanged = new UnityEvent<int>();
     public UnityEvent<int> OnHighestScoreChanged = new UnityEvent<int>();
+    public UnityEvent<int> OnScoreReached = new UnityEvent<int>();
 
     private void Awake()
     {
@@ -24,6 +25,11 @@ public class ScoreManager : MonoBehaviour
     {
         totalScore += 1;
         OnTotalScoreChanged.Invoke(totalScore);
+        if(totalScore == 25 || totalScore == 50 || totalScore == 100)
+        {
+            OnScoreReached.Invoke(totalScore);
+        }
+    
     }
 
     public void RegisterHighscore()

@@ -277,9 +277,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 6156467691181922696}
   speed: 2
-  attackDistance: 5
+  attackDistance: 4
   time: 0
   inAttackRange: 0
+  animationController: {fileID: 8128010310238590915}
   OnEnemyDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -287,7 +288,6 @@ MonoBehaviour:
   aim: {fileID: 8774404711153201735}
   shootDelay: 3
   lineRenderer: {fileID: 8214939771657819327}
-  animationController: {fileID: 8128010310238590915}
 --- !u!50 &6156467691181922696
 Rigidbody2D:
   serializedVersion: 4
