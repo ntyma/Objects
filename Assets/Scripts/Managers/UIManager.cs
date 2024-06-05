@@ -15,12 +15,6 @@ public class UIManager : MonoBehaviour
         SetGamePlayScreen();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetGameOverScreen()
     {
         uiGamePlay.gameObject.SetActive(false);
@@ -38,6 +32,5 @@ public class UIManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene(0);
-        SetGamePlayScreen();
     }
 }

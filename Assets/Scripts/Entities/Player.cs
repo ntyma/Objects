@@ -12,6 +12,7 @@ public class Player : Character
     [SerializeField] private Weapon powerUpWeapon;
     [SerializeField] private int nukeCount = 0;
     [SerializeField] private float shootDelay;
+    private ParticleSystem particleSystem;
     private float timer;
     //[SerializeField] private Image coolDownImage;
 
@@ -30,6 +31,9 @@ public class Player : Character
     protected override void Start()
     {
         myPlayer = GetComponent<Player>();
+        particleSystem = GetComponent<ParticleSystem>();
+        particleSystem.Stop();
+
         healthPoints = new Health(100);
         //playerWeapon = new Weapon(bulletPrefab);
 
@@ -51,6 +55,18 @@ public class Player : Character
     public void HealPlayer()
     {
         healthPoints.Heal();
+        //StartHealParticleSystem();
+        //Invoke(nameof(StopHealParticleSystem), 2f);
+    }
+
+    private void StartHealParticleSystem()
+    {
+        particleSystem.Play();
+    }
+
+    private void StopHealParticleSystem()
+    {
+        particleSystem.Stop();
     }
 
     public override void Attack()

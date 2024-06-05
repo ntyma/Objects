@@ -5,20 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class UIMainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject instructions;
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        
+        ShowMainMenu();
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ShowInstructionScreen()
+    {
+        instructions.gameObject.SetActive(true);
+        mainMenu.gameObject.SetActive(false);
+    }
+
+    public void ShowMainMenu()
+    {
+        mainMenu.gameObject.SetActive(true);
+        instructions.gameObject.SetActive(false);
     }
 }

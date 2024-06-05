@@ -6,7 +6,8 @@ public class MedicineBox : PickUp
 {
     protected override void PickMe(Character characterToChange)
     {
-        base.PickMe(characterToChange);
         characterToChange.GetComponent<Player>().HealPlayer();
+        base.PickMe(characterToChange);
     }
+
 }

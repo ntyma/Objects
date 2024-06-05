@@ -63,7 +63,6 @@ public class ShooterEnemy : Enemy
 
     public override void Die()
     {
-
         StopAllCoroutines();
         base.Die();
     }
