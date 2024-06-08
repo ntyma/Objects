@@ -12,7 +12,7 @@ public class Player : Character
     [SerializeField] private Weapon powerUpWeapon;
     [SerializeField] private int nukeCount = 0;
     [SerializeField] private float shootDelay;
-    private ParticleSystem particleSystem;
+
     private float timer;
     //[SerializeField] private Image coolDownImage;
 
@@ -22,6 +22,9 @@ public class Player : Character
     public UnityEvent<int> OnNukeCountChanged = new UnityEvent<int>();
     public UnityEvent OnPowerUp = new UnityEvent();
     public UnityEvent OnPowerUpEnd = new UnityEvent();
+    public UnityEvent OnShoot = new UnityEvent();
+    public UnityEvent OnThrow = new UnityEvent();
+
 
     //public Player(float speed, int health) : base(speed, health)
     //{
@@ -31,8 +34,6 @@ public class Player : Character
     protected override void Start()
     {
         myPlayer = GetComponent<Player>();
-        particleSystem = GetComponent<ParticleSystem>();
-        particleSystem.Stop();
 
         healthPoints = new Health(100);
         //playerWeapon = new Weapon(bulletPrefab);
@@ -55,24 +56,14 @@ public class Player : Character
     public void HealPlayer()
     {
         healthPoints.Heal();
-        //StartHealParticleSystem();
-        //Invoke(nameof(StopHealParticleSystem), 2f);
     }
 
-    private void StartHealParticleSystem()
-    {
-        particleSystem.Play();
-    }
-
-    private void StopHealParticleSystem()
-    {
-        particleSystem.Stop();
-    }
 
     public override void Attack()
     {
         //playerWeapon.ShootPlayer(aim.position, aim.rotation);
         playerWeapon.Shoot(aim.transform.position, transform.rotation, "Enemy");
+        OnShoot.Invoke();
     }
 
     public void PowerUpAttack()
@@ -112,6 +103,7 @@ public class Player : Character
         {
             return;
         }
+        OnThrow.Invoke();
         nukeCount--;
         OnNukeCountChanged.Invoke(nukeCount);
         GameManager.singleton.DestroyAllEnemies();

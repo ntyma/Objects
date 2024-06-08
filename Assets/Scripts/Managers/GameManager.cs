@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Enemy> enemiesSpawned = new List<Enemy>();
 
     private float spawnRate;
+    private int enemyHealth;
 
     //[SerializeField] private int GeneratePickUpProbability;
 
@@ -34,11 +35,23 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemy());
         spawnRate = 3.5f;
+        enemyHealth = 1;
 
-        scoreManager.OnScoreReached.AddListener(IncreaseSpawnRate);
+        scoreManager.OnScoreReached.AddListener(IncreaseDifficulty);
     }
 
-    private void IncreaseSpawnRate(int score)
+    private void IncreaseDifficulty(int score)
+    {
+        IncreaseSpawnRate();
+        IncreaseEnemyHealth();
+    }
+
+    private void IncreaseEnemyHealth()
+    {
+        enemyHealth += 3;
+    }
+
+    private void IncreaseSpawnRate()
     {
         if(spawnRate != 2f)
         {
@@ -80,7 +93,7 @@ public class GameManager : MonoBehaviour
             enemiesSpawned.Add(enemy);
             enemy.OnEnemyDeath.AddListener(EnemyDied);
 
-            enemy.SetUpEnemy(1);
+            enemy.SetUpEnemy(enemyHealth);
 
             if(enemiesSpawned.Count > 15)
             {
